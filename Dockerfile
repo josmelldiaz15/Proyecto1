@@ -1,10 +1,13 @@
 # Usa una imagen base con JDK 1.8
 FROM openjdk:8-jdk
 
-# Instalar GlassFish 4.1.1
+# Actualizar repositorios e instalar dependencias necesarias
 RUN apt-get update && \
-    apt-get install -y wget unzip && \
-    wget https://download.eclipse.org/ee4j/glassfish/glassfish-4.1.1.zip -O glassfish.zip && \
+    apt-get install -y wget unzip curl && \
+    apt-get clean
+
+# Descargar GlassFish desde tu URL
+RUN curl -L -o glassfish.zip http://download.oracle.com/glassfish/4.1.1/release/glassfish-4.1.1.zip && \
     unzip glassfish.zip -d /opt && \
     rm glassfish.zip
 
@@ -12,11 +15,9 @@ RUN apt-get update && \
 ENV GLASSFISH_HOME=/opt/glassfish4
 ENV PATH=$GLASSFISH_HOME/bin:$PATH
 
-# Copiar tu base de datos al contenedor
-COPY db /opt/db
-
-# Exponer puertos necesarios
+# Exponer los puertos necesarios
 EXPOSE 8080 4848 1527
 
-# Comando para iniciar GlassFish y Apache Derby
+# Comando para iniciar GlassFish
 CMD ["/bin/bash", "-c", "$GLASSFISH_HOME/bin/asadmin start-domain --verbose"]
+
