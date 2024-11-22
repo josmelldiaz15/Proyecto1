@@ -15,6 +15,9 @@ RUN curl -L -o glassfish.zip http://download.oracle.com/glassfish/4.1.1/release/
 ENV GLASSFISH_HOME=/opt/glassfish4
 ENV PATH=$GLASSFISH_HOME/bin:$PATH
 
+# Copiar el archivo .war al directorio autodeploy de GlassFish
+COPY app/carrito3.war $GLASSFISH_HOME/glassfish/domains/domain1/autodeploy/
+
 # Exponer los puertos necesarios
 EXPOSE 8080 4848 1527
 
