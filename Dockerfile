@@ -6,7 +6,7 @@ RUN apt-get update && \
     apt-get install -y wget unzip curl && \
     apt-get clean
 
-# Descargar GlassFish desde tu URL
+# Descargar GlassFish
 RUN curl -L -o glassfish.zip http://download.oracle.com/glassfish/4.1.1/release/glassfish-4.1.1.zip && \
     unzip glassfish.zip -d /opt && \
     rm glassfish.zip
@@ -19,7 +19,7 @@ ENV PATH=$GLASSFISH_HOME/bin:$PATH
 COPY app/carrito3.war $GLASSFISH_HOME/glassfish/domains/domain1/autodeploy/
 
 # Exponer los puertos necesarios
-EXPOSE 8080 4848 1527
+EXPOSE 8080 4848
 
 # Comando para iniciar GlassFish
 CMD ["/bin/bash", "-c", "$GLASSFISH_HOME/bin/asadmin start-domain --verbose"]
