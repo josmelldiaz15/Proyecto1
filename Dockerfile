@@ -23,4 +23,3 @@ EXPOSE 8080 4848 1527
 
 # Comando para iniciar GlassFish
 CMD ["/bin/bash", "-c", "$GLASSFISH_HOME/bin/asadmin start-domain --verbose"]
-
